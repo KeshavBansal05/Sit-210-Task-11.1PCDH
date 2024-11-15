@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='verify_user.css') }}">
+</head>
+<body>
+    <h1>Verify User</h1>
+    <div id="status">Waiting for RFID scan...</div>
+
+    <script>
+        function checkVerification() {
+            fetch('/check_verification')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'verified') {
+                        document.getElementById('status').innerText = `Welcome, ${data.name}!`;
+                        // Redirect to parking status page after successful verification
+                        setTimeout(() => {
+                            window.location.href = "/parking_status";
+                        }, 2000); // Redirect after 2 seconds
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Check every 2 seconds
+        setInterval(checkVerification, 2000);
+    </script>
+</body>
+</html>

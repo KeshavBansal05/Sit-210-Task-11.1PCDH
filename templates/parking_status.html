@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Status - Smart Parking System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='parking_status.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ matched_user }}!</h2>
+        <p1>Parking Space Availability: <span class="available">Available</span></p1>
+        <p2>Parking Space Availability: <span class="available">Not-Available</span></p2>
+
+        <div class="buttons">
+            <button id="open-gate" class="button open-gate">Open Gate</button>
+            <a href="{{ url_for('index') }}" class="button go-home">Go to Home</a>
+        </div>
+    </div>
+    <script>
+        $('#open-gate').on('click', function() {
+            $.post("{{ url_for('open_gate') }}", function(data) {
+                alert(data.status);  // Notify user of gate opening
+            });
+        });
+    </script>
+</body>
+</html>
